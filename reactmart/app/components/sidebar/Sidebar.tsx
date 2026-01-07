@@ -2,14 +2,19 @@
 
 import { useCategories } from '@/hooks/useCategories';
 import { useState } from 'react';
+import { useAppDispatch } from '@/store/hooks';
+import { fetchProductsByCategory } from '@/store/slices/productsSlice';
 import './Sidebar.css';
 
 export const Sidebar = () => {
   const { categories, loading, error } = useCategories();
   const [ selectedCategory, setSelectedCategory ] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
 
   const selectCategory = (slug: string) => {
     setSelectedCategory(slug);
+    // Dispatch Redux thunk to fetch products by category
+    dispatch(fetchProductsByCategory(slug));
   }
 
   if (loading) {
