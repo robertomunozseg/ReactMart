@@ -1,8 +1,8 @@
 # ReactMart
 
-ReactMart is a small, modern e-commerce demo built with **Next.js** and **TypeScript**. It showcases a product catalog and category sidebar, client-side search and filtering for products and categories, and server-backed data fetching via `ProductsService`. The app is intended as a concise, practical example of building a performant, well-structured storefront UI.
+ReactMart is a small, modern e-commerce demo built with **Next.js** and **TypeScript**. It showcases a product catalog and category sidebar, client-side search and filtering for products and categories, and server-backed data fetching via `ProductsService`. Product data is sourced from https://dummyjson.com/products (DummyJSON) for demo purposes. The app is intended as a concise, practical example of building a performant, well-structured storefront UI.
 
-## Technologies
+## Technology Stack
 
 - **TypeScript** — typed React code for safety and DX
 - **Next.js** (App Router) — familiar server-side and client-side rendering
@@ -10,6 +10,7 @@ ReactMart is a small, modern e-commerce demo built with **Next.js** and **TypeSc
 - **Tailwind CSS** — utility-first styling (used everywhere in the UI)
 - **Redux Toolkit** — state management for products and selection
 - **axios-hooks** — lightweight hooks for data fetching
+- **react-hook-form** — form validation used for the simulated checkout
 - **Vercel-friendly build** — simple deploy experience
 
 ## Getting Started
