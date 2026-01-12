@@ -1,7 +1,7 @@
 'use client';
 
 import { useCategories } from '@/hooks/useCategories';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useAppDispatch } from '@/store/hooks';
 import { fetchProductsByCategory } from '@/store/slices/productsSlice';
 import './Sidebar.css';
@@ -9,7 +9,16 @@ import './Sidebar.css';
 export const Sidebar = () => {
   const { categories, loading, error } = useCategories();
   const [ selectedCategory, setSelectedCategory ] = useState<string | null>(null);
+  const [ searchTerm, setSearchTerm ] = useState('');
   const dispatch = useAppDispatch();
+
+  const filteredCategories = useMemo(() => {
+    const q = searchTerm.trim().toLowerCase();
+    if (!q) return categories;
+    return categories.filter(c =>
+      c.name.toLowerCase().includes(q) || c.slug.toLowerCase().includes(q)
+    );
+  }, [categories, searchTerm]);
 
   const selectCategory = (slug: string) => {
     setSelectedCategory(slug);
@@ -44,14 +53,24 @@ export const Sidebar = () => {
   return (
     <aside className="w-64 bg-white shadow-md h-screen sticky top-0 p-6 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 overflow-y-auto">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Categories</h2>
+      <div className="mb-4">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search categories"
+          aria-label="Search categories"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        />
+      </div>
       <nav>
         <ul className="space-y-2">
-          {categories.map((category) => {
+          {filteredCategories.map((category) => {
             return (
               <li
                 key={category.slug} 
                 onClick={() => selectCategory(category.slug.toString())}
-                className={`sidebar-item group ${selectedCategory === category.slug ? 'sidebar-item-active' : null}`}
+                className={`sidebar-item group ${selectedCategory === category.slug ? 'sidebar-item-active' : ''}`}
               >
                 {category.name}
               </li>
