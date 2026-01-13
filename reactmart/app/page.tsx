@@ -1,19 +1,18 @@
-'use client'
-import useAxios from "axios-hooks";
-import { PRODUCTS_URL } from "../config/constants";
+'use client';
 
-export default function app (){
-    const [{ data, loading, error }] = useAxios(PRODUCTS_URL);
+import { Sidebar } from './components/sidebar/Sidebar';
+import Products from './components/products/Products';
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error!</p>;    
-
-    return (
-        <div>
-            <main>
-                <h1>Data from API:</h1>
-                <pre>{JSON.stringify(data, null, 2)}</pre>
-            </main>
-        </div>
-    );
+export default function HomePage() {
+  return (
+    <div className="flex min-h-screen bg-gray-50">
+      {/* Sidebar */}
+      <Sidebar />
+      
+      {/* Main Content */}
+      <main className="flex-1 p-8">
+        <Products />
+      </main>
+    </div>
+  );
 }
